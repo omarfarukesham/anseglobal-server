@@ -39,10 +39,18 @@ app.use('/api/admin', adminRouter);
 app.use('/api/user', userRouter);
 app.use('/api/blogs', blogRouter);
 app.use('/api/seo', seoRouter)
-app.use('/api/instagram/', instagramRouter);
+app.use('/api/instagram', instagramRouter);
 
-app.use('/api/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+if (process.env.NODE_ENV === 'development') {
+  app.use('/api/api-docs', swaggerUi.serveFiles(swaggerSpec), swaggerUi.setup(swaggerSpec));
+} else {
+  app.use('/api/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+}
 
+app.get('/api/swagger.json', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(swaggerSpec);
+});
 
 app.get('/', (req: Request, res: Response) => {
   res.send({

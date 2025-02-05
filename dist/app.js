@@ -40,8 +40,17 @@ app.use('/api/admin', admin_router_1.default);
 app.use('/api/user', user_router_1.default);
 app.use('/api/blogs', blog_router_1.default);
 app.use('/api/seo', seo_router_1.default);
-app.use('/api/instagram/', instagram_router_1.default);
-app.use('/api/api-docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_1.default));
+app.use('/api/instagram', instagram_router_1.default);
+if (process.env.NODE_ENV === 'development') {
+    app.use('/api/api-docs', swagger_ui_express_1.default.serveFiles(swagger_1.default), swagger_ui_express_1.default.setup(swagger_1.default));
+}
+else {
+    app.use('/api/api-docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_1.default));
+}
+app.get('/api/swagger.json', (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(swagger_1.default);
+});
 app.get('/', (req, res) => {
     res.send({
         status: true,

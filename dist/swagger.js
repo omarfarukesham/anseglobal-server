@@ -15,7 +15,7 @@ const swaggerOptions = {
         servers: [
             {
                 url: 'https://anseglobal-server.vercel.app',
-                description: 'Local server',
+                description: 'Production server',
             },
         ],
     },
