@@ -1,7 +1,6 @@
-![Assignment-3](https://i.ibb.co.com/qNWgN9v/DALL-E-2024-12-19-21-40-45-A-detailed-illustration-capturing-the-essence-of-collaborative-problem-so.webp)
 
 <h1 align="center">
-  Assignment  project - 3 🚀
+  Anse Global Sudia'S server 🚀
 </h1>
 
  # 📝 Blog Management API

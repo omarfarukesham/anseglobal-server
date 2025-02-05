@@ -5,18 +5,23 @@ const mongoose_1 = require("mongoose");
  * @swagger
  * components:
  *   schemas:
- *     Blog:
+ *     SEO:
  *       type: object
  *       properties:
  *         title:
  *           type: string
- *           description: The title of the blog
- *         content:
+ *           description: The title of the page
+ *         description:
  *           type: string
- *           description: The content of the blog
- *         author:
+ *           description: The meta description for the page
+ *         keywords:
+ *           type: array
+ *           items:
+ *             type: string
+ *           description: List of relevant keywords
+ *         url:
  *           type: string
- *           description: The ID of the author
+ *           description: The URL of the page
  *         createdAt:
  *           type: string
  *           format: date-time
@@ -27,41 +32,41 @@ const mongoose_1 = require("mongoose");
  *           description: Last update timestamp
  *       required:
  *         - title
- *         - content
- *         - author
+ *         - description
+ *         - url
  */
-const blogSchema = new mongoose_1.Schema({
-    title: {
+const seoSchema = new mongoose_1.Schema({
+    pageUrl: {
         type: String,
         required: true,
-        minlength: 5,
-        maxlength: 100,
+        unique: true,
     },
-    content: {
+    metaTitle: {
         type: String,
-        required: true,
-        minlength: 10,
+        maxlength: 60,
     },
+    metaDescription: {
+        type: String,
+        maxlength: 160,
+    },
+    keywords: [
+        {
+            type: String,
+        },
+    ],
     slug: {
         type: String,
         required: true,
         unique: true,
     },
-    author: {
-        type: mongoose_1.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
-    },
-    image: {
+    createdBy: {
         type: String,
-        required: true,
     },
-    isPublished: {
-        type: Boolean,
-        default: false,
-    }
+    updatedBy: {
+        type: String,
+    },
 }, {
     timestamps: true,
 });
-const Blog = (0, mongoose_1.model)("Blog", blogSchema);
-exports.default = Blog;
+const SEO = (0, mongoose_1.model)("SEO", seoSchema);
+exports.default = SEO;

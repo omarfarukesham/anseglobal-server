@@ -10,14 +10,15 @@ const blog_router_1 = __importDefault(require("./module/blog/blog.router"));
 const globalErrorHandler_1 = require("./middlewares/globalErrorHandler");
 const admin_router_1 = __importDefault(require("./module/admin/admin.router"));
 const notFound_1 = __importDefault(require("./middlewares/notFound"));
-const product_routes_1 = require("./module/product/product.routes");
-const order_routes_1 = require("./module/order/order.routes");
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const cors_1 = __importDefault(require("cors"));
-const checkout_routes_1 = require("./module/checkout/checkout.routes");
+const seo_router_1 = __importDefault(require("./module/seo/seo.router"));
+const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
+const swagger_1 = __importDefault(require("./swagger"));
+const instagram_router_1 = __importDefault(require("./module/instagram/instagram.router"));
 const app = (0, express_1.default)();
 // CORS configuration
-const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174', 'https://boitoi-admin.vercel.app', 'https://boitoi-marketplace.vercel.app'];
+const allowedOrigins = ['https://anseglobal.com', 'https://boitoi-marketplace.vercel.app'];
 app.use((0, cors_1.default)({
     origin: function (origin, callback) {
         if (!origin)
@@ -38,9 +39,9 @@ app.use('/api/auth', auth_router_1.default);
 app.use('/api/admin', admin_router_1.default);
 app.use('/api/user', user_router_1.default);
 app.use('/api/blogs', blog_router_1.default);
-app.use('/api/products', product_routes_1.ProductRoutes);
-app.use('/api/orders', order_routes_1.OrderRoutes);
-app.use('/api/checkouts', checkout_routes_1.CheckoutRoutes);
+app.use('/api/seo', seo_router_1.default);
+app.use('/api/instagram/', instagram_router_1.default);
+app.use('/api/api-docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_1.default));
 app.get('/', (req, res) => {
     res.send({
         status: true,
