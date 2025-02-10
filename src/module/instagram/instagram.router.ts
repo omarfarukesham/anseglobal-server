@@ -1,5 +1,5 @@
-import { Router } from 'express';
-import { instagramController } from './instagram.controller';
+import { Router } from "express";
+import { instagramController } from "./instagram.controller";
 
 const instagramRouter = Router();
 
@@ -26,7 +26,7 @@ const instagramRouter = Router();
  *       201:
  *         description: Instagram record created successfully
  */
-instagramRouter.post('/', instagramController.createInstagram);
+instagramRouter.post("/", instagramController.createInstagramToken);
 
 /**
  * @swagger
@@ -44,7 +44,7 @@ instagramRouter.post('/', instagramController.createInstagram);
  *               items:
  *                 $ref: '#/components/schemas/Instagram'
  */
-instagramRouter.get('/', instagramController.getAllInstagrams);
+instagramRouter.get("/", instagramController.getInstagramToken);
 
 /**
  * @swagger
@@ -65,8 +65,7 @@ instagramRouter.get('/', instagramController.getAllInstagrams);
  *       404:
  *         description: Instagram record not found
  */
-instagramRouter.get('/:id', instagramController.getInstagramById);
-
+instagramRouter.get("/:id", instagramController.getInstagramById);
 
 /**
  * @swagger
@@ -87,6 +86,6 @@ instagramRouter.get('/:id', instagramController.getInstagramById);
  *       404:
  *         description: Instagram record not found
  */
-instagramRouter.delete('/:id', instagramController.deleteInstagram);
+instagramRouter.delete("/:id", instagramController.deleteInstagramToken);
 
 export default instagramRouter;
