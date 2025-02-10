@@ -1,49 +1,62 @@
-import { Request, Response } from 'express';
-import { instagramService } from './instagram.service';
+import { Request, Response } from "express";
+import { StatusCodes } from "http-status-codes";
+import catchAsync from "../../utils/catchAsync";
+import sendResponse from "../../utils/sendResponse";
+import { instagramService } from "./instagram.service";
 
+const createInstagram = catchAsync(async (req: Request, res: Response) => {
+  const newInstagram = await instagramService.createInstagram(req.body);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.CREATED,
+    message: "Instagram record created successfully",
+    data: newInstagram,
+  });
+});
+
+const getAllInstagrams = catchAsync(async (req: Request, res: Response) => {
+  const instagrams = await instagramService.getAllInstagrams();
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    message: "Instagram records fetched successfully",
+    data: instagrams,
+  });
+});
+
+const getInstagramById = catchAsync(async(req: Request, res: Response)=> {
+  const { id } = req.params;
+  const instagram =  await instagramService.getSingleInstagram(id);
+
+  if (!instagram) {
+     res.status(StatusCodes.NOT_FOUND).json({ message: "Instagram record not found" });
+  }
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    message: "Instagram record fetched successfully",
+    data: instagram,
+  });
+});
+
+const deleteInstagram = catchAsync(async(req: Request, res: Response) => {
+  const { id } = req.params;
+  const instagram = await instagramService.deleteInstagram(id);
+
+  if (!instagram) {
+    res.status(StatusCodes.NOT_FOUND).json({ message: "Instagram record not found" });
+    return;
+  }
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    message: "Instagram record deleted successfully",
+    data: {},
+  });
+});
 export const instagramController = {
-  async createInstagram(req: Request, res: Response) {
-    try {
-      const { accessToken } = req.body;
-      const newInstagram = await instagramService.create(accessToken);
-      res.status(201).json(newInstagram);
-    } catch (error) {
-      res.status(500).json({ message: 'Error creating Instagram record', error });
-    }
-  },
-
-  async getAllInstagrams(req: Request, res: Response) {
-    try {
-      const instagrams = await instagramService.getAll();
-      res.status(200).json(instagrams);
-    } catch (error) {
-      res.status(500).json({ message: 'Error fetching Instagram records', error });
-    }
-  },
-
-  async getInstagramById(req: Request, res: Response) {
-    try {
-      const { id } = req.params;
-      const instagram = await instagramService.getById(id);
-      if (!instagram) {
-       res.status(404).json({ message: 'Instagram record not found' });
-      }
-      res.status(200).json(instagram);
-    } catch (error) {
-      res.status(500).json({ message: 'Error fetching Instagram record', error });
-    }
-  },
-
-  async deleteInstagram(req: Request, res: Response) {
-    try {
-      const { id } = req.params;
-      const success = await instagramService.delete(id);
-      if (!success) {
-      res.status(404).json({ message: 'Instagram record not found' });
-      }
-      res.status(200).json({ message: 'Instagram record deleted successfully' });
-    } catch (error) {
-      res.status(500).json({ message: 'Error deleting Instagram record', error });
-    }
-  },
+  createInstagram,
+  getAllInstagrams,
+  getInstagramById,
+  deleteInstagram,
 };

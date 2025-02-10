@@ -18,7 +18,7 @@ const swagger_1 = __importDefault(require("./swagger"));
 const instagram_router_1 = __importDefault(require("./module/instagram/instagram.router"));
 const app = (0, express_1.default)();
 // CORS configuration
-const allowedOrigins = ['https://anseglobal.com', 'https://boitoi-marketplace.vercel.app'];
+const allowedOrigins = ['https:localhost:3000', 'https:localhost:5731', 'https://anseglobal.com', 'https://boitoi-marketplace.vercel.app'];
 app.use((0, cors_1.default)({
     origin: function (origin, callback) {
         if (!origin)

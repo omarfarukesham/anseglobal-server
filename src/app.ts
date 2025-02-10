@@ -15,7 +15,7 @@ import instagramRouter from './module/instagram/instagram.router';
 const app = express();
 
 // CORS configuration
-const allowedOrigins = [ 'https://anseglobal.com', 'https://boitoi-marketplace.vercel.app'];
+const allowedOrigins = ['https:localhost:3000', 'https:localhost:5731','https://anseglobal.com', 'https://boitoi-marketplace.vercel.app'];
 
 app.use(cors({
   origin: function (origin, callback) {

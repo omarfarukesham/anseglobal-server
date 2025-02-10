@@ -1,3 +1,5 @@
+import mongoose, { model, Schema } from "mongoose";
+
 /**
  * @swagger
  * components:
@@ -5,27 +7,25 @@
  *     Instagram:
  *       type: object
  *       properties:
- *         id:
+ *         token:
  *           type: string
- *           description: Unique identifier for the Instagram record
- *         accessToken:
- *           type: string
- *           description: Instagram access token
- *         createdAt:
- *           type: string
- *           format: date-time
- *           description: Creation timestamp
- *         updatedAt:
- *           type: string
- *           format: date-time
- *           description: Last update timestamp
+ *           description: The authentication token for the Instagram account
  *       required:
- *         - accessToken
+ *         - token
  */
-export interface Instagram {
-    id: string;
-    accessToken: string;
-    createdAt: Date;
-    updatedAt: Date;
+
+const instagramSchema = new Schema(
+  {
+    token: {
+      type: String,
+      required: true,
+    },
+  },
+  {
+    timestamps: true, 
   }
-  
+);
+
+const Instagram = model("Instagram", instagramSchema);
+
+export default Instagram;

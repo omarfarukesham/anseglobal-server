@@ -22,9 +22,8 @@
  *       required:
  *         - accessToken
  */
-export interface Instagram {
-    id: string;
-    accessToken: string;
+export interface IInstagram {
+    token: string;
     createdAt: Date;
     updatedAt: Date;
   }

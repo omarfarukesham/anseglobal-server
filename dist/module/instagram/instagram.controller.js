@@ -8,61 +8,59 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.instagramController = void 0;
+const http_status_codes_1 = require("http-status-codes");
+const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
+const sendResponse_1 = __importDefault(require("../../utils/sendResponse"));
 const instagram_service_1 = require("./instagram.service");
+const createInstagram = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const newInstagram = yield instagram_service_1.instagramService.createInstagram(req.body);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_codes_1.StatusCodes.CREATED,
+        message: "Instagram record created successfully",
+        data: newInstagram,
+    });
+}));
+const getAllInstagrams = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const instagrams = yield instagram_service_1.instagramService.getAllInstagrams();
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_codes_1.StatusCodes.OK,
+        message: "Instagram records fetched successfully",
+        data: instagrams,
+    });
+}));
+const getInstagramById = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const instagram = yield instagram_service_1.instagramService.getSingleInstagram(id);
+    if (!instagram) {
+        res.status(http_status_codes_1.StatusCodes.NOT_FOUND).json({ message: "Instagram record not found" });
+    }
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_codes_1.StatusCodes.OK,
+        message: "Instagram record fetched successfully",
+        data: instagram,
+    });
+}));
+const deleteInstagram = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const instagram = yield instagram_service_1.instagramService.deleteInstagram(id);
+    if (!instagram) {
+        res.status(http_status_codes_1.StatusCodes.NOT_FOUND).json({ message: "Instagram record not found" });
+        return;
+    }
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_codes_1.StatusCodes.OK,
+        message: "Instagram record deleted successfully",
+        data: {},
+    });
+}));
 exports.instagramController = {
-    createInstagram(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const { accessToken } = req.body;
-                const newInstagram = yield instagram_service_1.instagramService.create(accessToken);
-                res.status(201).json(newInstagram);
-            }
-            catch (error) {
-                res.status(500).json({ message: 'Error creating Instagram record', error });
-            }
-        });
-    },
-    getAllInstagrams(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const instagrams = yield instagram_service_1.instagramService.getAll();
-                res.status(200).json(instagrams);
-            }
-            catch (error) {
-                res.status(500).json({ message: 'Error fetching Instagram records', error });
-            }
-        });
-    },
-    getInstagramById(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const { id } = req.params;
-                const instagram = yield instagram_service_1.instagramService.getById(id);
-                if (!instagram) {
-                    res.status(404).json({ message: 'Instagram record not found' });
-                }
-                res.status(200).json(instagram);
-            }
-            catch (error) {
-                res.status(500).json({ message: 'Error fetching Instagram record', error });
-            }
-        });
-    },
-    deleteInstagram(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const { id } = req.params;
-                const success = yield instagram_service_1.instagramService.delete(id);
-                if (!success) {
-                    res.status(404).json({ message: 'Instagram record not found' });
-                }
-                res.status(200).json({ message: 'Instagram record deleted successfully' });
-            }
-            catch (error) {
-                res.status(500).json({ message: 'Error deleting Instagram record', error });
-            }
-        });
-    },
+    createInstagram,
+    getAllInstagrams,
+    getInstagramById,
+    deleteInstagram,
 };
