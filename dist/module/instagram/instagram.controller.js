@@ -17,27 +17,54 @@ const http_status_codes_1 = require("http-status-codes");
 const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../utils/sendResponse"));
 const instagram_service_1 = require("./instagram.service");
-const createInstagram = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const newInstagram = yield instagram_service_1.instagramService.createInstagram(req.body);
+const createInstagramToken = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const newInstagram = yield instagram_service_1.instagramService.createInstagramToken(req.body);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_codes_1.StatusCodes.CREATED,
-        message: "Instagram record created successfully",
+        message: "Token added successfully",
         data: newInstagram,
     });
 }));
-const getAllInstagrams = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const instagrams = yield instagram_service_1.instagramService.getAllInstagrams();
+const getInstagramToken = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const instagramToken = yield instagram_service_1.instagramService.getInstagramToken();
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_codes_1.StatusCodes.OK,
         message: "Instagram records fetched successfully",
-        data: instagrams,
+        data: instagramToken,
+    });
+}));
+const getInstagramData = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const instagramData = yield instagram_service_1.instagramService.getInstagramData();
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_codes_1.StatusCodes.OK,
+        message: "Instagram data fetched successfully",
+        data: instagramData,
+    });
+}));
+const updateInstagramToken = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { token } = req.params;
+    const { newToken } = req.body;
+    console.log(req.body);
+    const updatedInstagram = yield instagram_service_1.instagramService.updateInstagramToken(token, newToken);
+    if (!updatedInstagram) {
+        res
+            .status(http_status_codes_1.StatusCodes.NOT_FOUND)
+            .json({ message: "Instagram record not found" });
+        return;
+    }
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_codes_1.StatusCodes.OK,
+        message: "Instagram Token Updated successfully",
+        data: {},
     });
 }));
 const getInstagramById = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const instagram = yield instagram_service_1.instagramService.getSingleInstagram(id);
     if (!instagram) {
-        res.status(http_status_codes_1.StatusCodes.NOT_FOUND).json({ message: "Instagram record not found" });
+        res
+            .status(http_status_codes_1.StatusCodes.NOT_FOUND)
+            .json({ message: "Instagram record not found" });
     }
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_codes_1.StatusCodes.OK,
@@ -45,11 +72,13 @@ const getInstagramById = (0, catchAsync_1.default)((req, res) => __awaiter(void 
         data: instagram,
     });
 }));
-const deleteInstagram = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const deleteInstagramToken = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const instagram = yield instagram_service_1.instagramService.deleteInstagram(id);
+    const instagram = yield instagram_service_1.instagramService.deleteInstagramToken(id);
     if (!instagram) {
-        res.status(http_status_codes_1.StatusCodes.NOT_FOUND).json({ message: "Instagram record not found" });
+        res
+            .status(http_status_codes_1.StatusCodes.NOT_FOUND)
+            .json({ message: "Instagram record not found" });
         return;
     }
     (0, sendResponse_1.default)(res, {
@@ -59,8 +88,10 @@ const deleteInstagram = (0, catchAsync_1.default)((req, res) => __awaiter(void 0
     });
 }));
 exports.instagramController = {
-    createInstagram,
-    getAllInstagrams,
+    createInstagramToken,
+    getInstagramToken,
+    getInstagramData,
     getInstagramById,
-    deleteInstagram,
+    updateInstagramToken,
+    deleteInstagramToken,
 };

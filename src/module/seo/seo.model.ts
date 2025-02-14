@@ -1,4 +1,4 @@
-import mongoose, { model, Schema } from "mongoose";
+import { model, Schema } from "mongoose";
 import { ISEO } from "./seo.interface";
 
 /**
@@ -38,27 +38,32 @@ import { ISEO } from "./seo.interface";
 
 const seoSchema = new Schema<ISEO>(
   {
-    pageUrl: {
+    pageSlug: { type: String, unique: true, required: true },
+    title: {
       type: String,
       required: true,
-      unique: true,
     },
-    metaTitle: {
+    description: {
       type: String,
-      maxlength: 60,
-    },
-    metaDescription: {
-      type: String,
-      maxlength: 160,
+      required: true,
     },
     keywords: [
       {
         type: String,
       },
     ],
-    slug: {
+    robotsDirectives: { type: String, default: "index, follow" },
+    structuredData: {
       type: String,
-      required: true,
+    },
+    alternateLanguages: {
+      type: [String],
+    },
+    hreflang: {
+      type: String,
+    },
+    canonicalUrl: {
+      type: String,
       unique: true,
     },
     createdBy: {
@@ -69,7 +74,7 @@ const seoSchema = new Schema<ISEO>(
     },
   },
   {
-    timestamps: true, 
+    timestamps: true,
   }
 );
 

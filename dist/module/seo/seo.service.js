@@ -20,7 +20,7 @@ const createSEO = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     return result;
 });
 const getAllSEOs = (query) => __awaiter(void 0, void 0, void 0, function* () {
-    const searchableFields = ["pageUrl", "metaTitle", "metaDescription", "slug"];
+    const searchableFields = ["canonicalUrl", "title", "description", "pageSlug"];
     const seos = new querybuilder_1.default(seo_model_1.default.find(), query)
         .search(searchableFields)
         .filter()
@@ -29,8 +29,8 @@ const getAllSEOs = (query) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield seos.modelQuery;
     return result;
 });
-const getSingleSEO = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield seo_model_1.default.findById(id);
+const getSingleSEO = (pageSlug) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield seo_model_1.default.findOne({ pageSlug });
     return result;
 });
 const updateSEO = (id, data) => __awaiter(void 0, void 0, void 0, function* () {

@@ -23,7 +23,7 @@ const createSEO = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void
     const result = yield seo_service_1.seoService.createSEO(payload);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_codes_1.StatusCodes.CREATED,
-        message: 'SEO entry created successfully',
+        message: "SEO entry created successfully",
         data: result,
     });
 }));
@@ -31,16 +31,17 @@ const getAllSEOs = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, voi
     const result = yield seo_service_1.seoService.getAllSEOs(req.query);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_codes_1.StatusCodes.OK,
-        message: 'All SEO entries retrieved successfully',
+        message: "All SEO entries retrieved successfully",
         data: result,
     });
 }));
 const getSingleSEO = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const seoId = req.params.id;
-    const result = yield seo_service_1.seoService.getSingleSEO(seoId);
+    // const seoId = req.params.id;
+    const pageSlug = req.params.slug;
+    const result = yield seo_service_1.seoService.getSingleSEO(pageSlug);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_codes_1.StatusCodes.OK,
-        message: 'SEO entry retrieved successfully',
+        message: "SEO entry retrieved successfully",
         data: result,
     });
 }));
@@ -50,7 +51,7 @@ const updateSEO = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void
     const result = yield seo_service_1.seoService.updateSEO(seoId, body);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_codes_1.StatusCodes.OK,
-        message: 'SEO entry updated successfully',
+        message: "SEO entry updated successfully",
         data: result,
     });
 }));
@@ -59,7 +60,7 @@ const deleteSEO = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void
     yield seo_service_1.seoService.deleteSEO(seoId);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_codes_1.StatusCodes.OK,
-        message: 'SEO entry deleted successfully',
+        message: "SEO entry deleted successfully",
         data: {},
     });
 }));

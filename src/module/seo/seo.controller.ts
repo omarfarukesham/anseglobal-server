@@ -1,18 +1,18 @@
-import { StatusCodes } from 'http-status-codes';
-import catchAsync from '../../utils/catchAsync';
-import sendResponse from '../../utils/sendResponse';
-import { seoService } from './seo.service';
+import { StatusCodes } from "http-status-codes";
+import catchAsync from "../../utils/catchAsync";
+import sendResponse from "../../utils/sendResponse";
+import { seoService } from "./seo.service";
 
 const createSEO = catchAsync(async (req, res) => {
   const payload = {
     ...req.body,
   };
-console.log(req.body)
+  console.log(req.body);
   const result = await seoService.createSEO(payload);
 
   sendResponse(res, {
     statusCode: StatusCodes.CREATED,
-    message: 'SEO entry created successfully',
+    message: "SEO entry created successfully",
     data: result,
   });
 });
@@ -22,18 +22,19 @@ const getAllSEOs = catchAsync(async (req, res) => {
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
-    message: 'All SEO entries retrieved successfully',
+    message: "All SEO entries retrieved successfully",
     data: result,
   });
 });
 
 const getSingleSEO = catchAsync(async (req, res) => {
-  const seoId = req.params.id;
-  const result = await seoService.getSingleSEO(seoId);
+  // const seoId = req.params.id;
+  const pageSlug = req.params.slug;
+  const result = await seoService.getSingleSEO(pageSlug);
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
-    message: 'SEO entry retrieved successfully',
+    message: "SEO entry retrieved successfully",
     data: result,
   });
 });
@@ -46,7 +47,7 @@ const updateSEO = catchAsync(async (req, res) => {
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
-    message: 'SEO entry updated successfully',
+    message: "SEO entry updated successfully",
     data: result,
   });
 });
@@ -58,7 +59,7 @@ const deleteSEO = catchAsync(async (req, res) => {
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
-    message: 'SEO entry deleted successfully',
+    message: "SEO entry deleted successfully",
     data: {},
   });
 });

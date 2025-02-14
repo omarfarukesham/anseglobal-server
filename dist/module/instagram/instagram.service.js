@@ -13,26 +13,43 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.instagramService = void 0;
+const axios_1 = __importDefault(require("axios"));
 const instagram_model_1 = __importDefault(require("./instagram.model"));
-const createInstagram = (payload) => __awaiter(void 0, void 0, void 0, function* () {
+const createInstagramToken = (payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const existingInstagram = yield instagram_model_1.default.findOne(); // Check if a token already exists
+    if (existingInstagram) {
+        throw new Error("Instagram API token already exist.");
+    }
     const result = yield instagram_model_1.default.create(payload);
     return result;
 });
-const getAllInstagrams = () => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield instagram_model_1.default.find();
+const getInstagramToken = () => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield instagram_model_1.default.findOne();
     return result;
+});
+const getInstagramData = () => __awaiter(void 0, void 0, void 0, function* () {
+    const instagramRecord = yield instagram_model_1.default.findOne(); // Get the existing Instagram record
+    if (!instagramRecord) {
+        throw new Error("No Instagram token found.");
+    }
+    const token = instagramRecord.token;
+    const response = yield axios_1.default.get(`https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,thumbnail_url,permalink,timestamp&access_token=${token}`);
+    return response.data;
 });
 const getSingleInstagram = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield instagram_model_1.default.findById(id);
     return result;
 });
-const updateInstagram = (id, data) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield instagram_model_1.default.findOneAndUpdate({ _id: id }, data, {
+const updateInstagramToken = (token, newToken) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("🚀 ~ newToken:", newToken);
+    const result = yield instagram_model_1.default.findOneAndUpdate({ token: token }, { token: newToken }, // Update the token with the same value
+    {
         new: true,
     });
+    console.log("🚀 ~ result:", result);
     return result;
 });
-const deleteInstagram = (id) => __awaiter(void 0, void 0, void 0, function* () {
+const deleteInstagramToken = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield instagram_model_1.default.findByIdAndDelete(id);
     if (!result) {
         throw new Error("Instagram entry could not be deleted");
@@ -40,9 +57,10 @@ const deleteInstagram = (id) => __awaiter(void 0, void 0, void 0, function* () {
     return result;
 });
 exports.instagramService = {
-    createInstagram,
-    getAllInstagrams,
+    createInstagramToken,
+    getInstagramToken,
+    getInstagramData,
     getSingleInstagram,
-    updateInstagram,
-    deleteInstagram,
+    updateInstagramToken,
+    deleteInstagramToken,
 };

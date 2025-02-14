@@ -15,12 +15,46 @@ const createInstagramToken = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getInstagramToken = catchAsync(async (req: Request, res: Response) => {
-  const instagrams = await instagramService.getInstagramToken();
+  const instagramToken = await instagramService.getInstagramToken();
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     message: "Instagram records fetched successfully",
-    data: instagrams,
+    data: instagramToken,
+  });
+});
+
+const getInstagramData = catchAsync(async (req: Request, res: Response) => {
+  const instagramData = await instagramService.getInstagramData();
+  console.log("🚀 ~ getInstagramData ~ instagramData:", instagramData);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    message: "Instagram data fetched successfully",
+    data: instagramData,
+  });
+});
+
+const updateInstagramToken = catchAsync(async (req: Request, res: Response) => {
+  const { token } = req.params;
+  const { newToken } = req.body;
+  console.log(req.body);
+  const updatedInstagram = await instagramService.updateInstagramToken(
+    token,
+    newToken
+  );
+
+  if (!updatedInstagram) {
+    res
+      .status(StatusCodes.NOT_FOUND)
+      .json({ message: "Instagram record not found" });
+    return;
+  }
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    message: "Instagram Token Updated successfully",
+    data: {},
   });
 });
 
@@ -58,9 +92,12 @@ const deleteInstagramToken = catchAsync(async (req: Request, res: Response) => {
     data: {},
   });
 });
+
 export const instagramController = {
   createInstagramToken,
   getInstagramToken,
+  getInstagramData,
   getInstagramById,
+  updateInstagramToken,
   deleteInstagramToken,
 };

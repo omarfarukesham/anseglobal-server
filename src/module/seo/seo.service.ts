@@ -8,7 +8,7 @@ const createSEO = async (payload: ISEO): Promise<ISEO> => {
 };
 
 const getAllSEOs = async (query: Record<string, unknown>) => {
-  const searchableFields = ["pageUrl", "metaTitle", "metaDescription", "slug"];
+  const searchableFields = ["canonicalUrl", "title", "description", "pageSlug"];
 
   const seos = new QueryBuilder(SEO.find(), query)
     .search(searchableFields)
@@ -20,8 +20,8 @@ const getAllSEOs = async (query: Record<string, unknown>) => {
   return result;
 };
 
-const getSingleSEO = async (id: string) => {
-  const result = await SEO.findById(id);
+const getSingleSEO = async (pageSlug: string) => {
+  const result = await SEO.findOne({ pageSlug });
   return result;
 };
 
