@@ -17,6 +17,7 @@ const app = express();
 // CORS configuration
 const allowedOrigins = [
   "https:localhost:3000",
+  "http://localhost:3001",
   "http://localhost:3000",
   "https:localhost:5731",
   "https://anseglobal.com",

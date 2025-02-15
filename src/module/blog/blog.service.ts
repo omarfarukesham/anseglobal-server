@@ -29,6 +29,14 @@ const getSingleBlog = async (id: string) => {
   return result;
 };
 
+const getBlogBySlug = async (slug: string) => {
+  const result = await Blog.findOne({ slug }).populate(
+    "author",
+    "name email role"
+  );
+  return result;
+};
+
 const updateBlog = async (id: string, data: IBlog) => {
   const result = await Blog.findOneAndUpdate({ _id: id }, data, {
     new: true,
@@ -37,11 +45,9 @@ const updateBlog = async (id: string, data: IBlog) => {
 };
 
 const deleteBlog = async (blogId: string, userId: string) => {
-  //  console.log(blogId, userId)
-
-  const result = await Blog.findByIdAndDelete({ _id: blogId });
-  if (result) {
-    throw new Error("Could not delete");
+  const result = await Blog.findByIdAndDelete(blogId);
+  if (!result) {
+    throw new Error("Could not delete the blog");
   }
   return result;
 };
@@ -50,6 +56,7 @@ export const blogService = {
   createBlog,
   getBlogs,
   getSingleBlog,
+  getBlogBySlug,
   updateBlog,
   deleteBlog,
 };
