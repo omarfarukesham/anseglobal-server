@@ -1,6 +1,5 @@
-import mongoose, { model, Schema } from "mongoose";
+import { model, Schema } from "mongoose";
 import { IBlog } from "./blog.interface";
-
 
 /**
  * @swagger
@@ -32,43 +31,42 @@ import { IBlog } from "./blog.interface";
  *         - author
  */
 
-
-const blogSchema = new Schema({
+const blogSchema = new Schema(
+  {
     title: {
-        type: String,
-        required: true,
-        minlength: 5,
-        maxlength: 100,
+      type: String,
+      required: true,
+      minlength: 5,
+      maxlength: 100,
     },
     content: {
-        type: String,
-        required: true,
-        minlength: 10,
+      type: String,
+      required: true,
+      minlength: 10,
     },
-    slug:{
-        type: String,
-        required: true,
-        unique: true,
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
     },
     author: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
     image: {
-        type: String,
-        required: true,
+      type: String,
     },
     isPublished: {
-        type: Boolean,
-        default: false,
-    }
-}, 
-{
-    timestamps: true, 
-  });
+      type: Boolean,
+      default: false,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
 const Blog = model<IBlog>("Blog", blogSchema);
 
 export default Blog;
-

@@ -1,5 +1,5 @@
-import { Router } from 'express';
-import { seoController } from './seo.controller';
+import { Router } from "express";
+import { seoController } from "./seo.controller";
 
 const seoRouter = Router();
 
@@ -32,7 +32,7 @@ const seoRouter = Router();
  *       400:
  *         description: Bad request
  */
-seoRouter.post('/', seoController.createSEO);
+seoRouter.post("/", seoController.createSEO);
 
 /**
  * @swagger
@@ -57,7 +57,7 @@ seoRouter.post('/', seoController.createSEO);
  *       404:
  *         description: SEO entry not found
  */
-seoRouter.get('/:id', seoController.getSingleSEO);
+seoRouter.get("/:slug", seoController.getSingleSEO);
 
 /**
  * @swagger
@@ -84,7 +84,7 @@ seoRouter.get('/:id', seoController.getSingleSEO);
  *       404:
  *         description: SEO entry not found
  */
-seoRouter.patch('/:id', seoController.updateSEO);
+seoRouter.patch("/:id", seoController.updateSEO);
 
 /**
  * @swagger
@@ -105,7 +105,7 @@ seoRouter.patch('/:id', seoController.updateSEO);
  *       404:
  *         description: SEO entry not found
  */
-seoRouter.delete('/:id', seoController.deleteSEO);
+seoRouter.delete("/:id", seoController.deleteSEO);
 
 /**
  * @swagger
@@ -123,12 +123,9 @@ seoRouter.delete('/:id', seoController.deleteSEO);
  *               items:
  *                 $ref: '#/components/schemas/SEO'
  */
-seoRouter.get('/', seoController.getAllSEOs);
+seoRouter.get("/", seoController.getAllSEOs);
 
 export default seoRouter;
-
-
-
 
 // import { Router } from 'express';
 // import { seoController } from './seo.controller';

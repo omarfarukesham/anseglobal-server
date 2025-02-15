@@ -1,11 +1,16 @@
 export interface ISEO {
-    pageUrl: string;
-    metaTitle?: string;         
-    metaDescription?: string;   
-    keywords?: string[];         
-    slug: string;
-    createdBy?: string;         
-    updatedBy?: string;        
-    createdAt?: Date;            
-    updatedAt?: Date;            
-  }
+  pageSlug: string;
+  canonicalUrl?: string;
+  title: string;
+  description: string;
+  keywords?: string[];
+  robotsDirectives?: string;
+  structuredData?: string;
+  alternateLanguages?: string[];
+  hreflang?: string;
+  lastModified?: Date;
+  createdBy?: string;
+  updatedBy?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+}

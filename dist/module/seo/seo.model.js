@@ -36,27 +36,35 @@ const mongoose_1 = require("mongoose");
  *         - url
  */
 const seoSchema = new mongoose_1.Schema({
-    pageUrl: {
+    pageSlug: { type: String, unique: true, required: true },
+    title: {
         type: String,
         required: true,
-        unique: true,
     },
-    metaTitle: {
+    description: {
         type: String,
-        maxlength: 60,
-    },
-    metaDescription: {
-        type: String,
-        maxlength: 160,
+        required: true,
     },
     keywords: [
         {
             type: String,
         },
     ],
-    slug: {
+    robotsDirectives: { type: String, default: "index, follow" },
+    structuredData: {
         type: String,
-        required: true,
+    },
+    alternateLanguages: {
+        type: [String],
+    },
+    hreflang: {
+        type: String,
+    },
+    lastModified: {
+        type: Date,
+    },
+    canonicalUrl: {
+        type: String,
         unique: true,
     },
     createdBy: {
