@@ -15,18 +15,20 @@ import swaggerSpec from "./swagger";
 const app = express();
 
 // CORS configuration
-const allowedOrigins = [
-  "https:localhost:3000",
-  "http://localhost:3001",
-  "http://localhost:3000",
-  "https:localhost:5731",
-  "https://anseglobal.com",
-  "http://admin.anseglobal.com",
-  "https://admin.anseglobal.com",
-  "https://backend.anseglobal.com",
-  "http://backend.anseglobal.com",
-  "http://localhost:5000",
-];
+// const allowedOrigins = [
+//   "https:localhost:3000",
+//   "http://localhost:3001",
+//   "http://localhost:3000",
+//   "https:localhost:5731",
+//   "https://anseglobal.com",
+//   "http://admin.anseglobal.com",
+//   "https://admin.anseglobal.com",
+//   "https://backend.anseglobal.com",
+//   "http://backend.anseglobal.com",
+//   "http://localhost:5000",
+// ];
+
+const allowedOrigins = "*";
 
 app.use(
   cors({
