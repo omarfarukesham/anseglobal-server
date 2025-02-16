@@ -21,6 +21,10 @@ const allowedOrigins = [
   "http://localhost:3000",
   "https:localhost:5731",
   "https://anseglobal.com",
+  "http://admin.anseglobal.com",
+  "https://admin.anseglobal.com",
+  "https://backend.anseglobal.com",
+  "http://backend.anseglobal.com",
   "http://localhost:5000",
 ];
 
