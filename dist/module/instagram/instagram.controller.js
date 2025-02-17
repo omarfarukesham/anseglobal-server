@@ -35,6 +35,7 @@ const getInstagramToken = (0, catchAsync_1.default)((req, res) => __awaiter(void
 }));
 const getInstagramData = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const instagramData = yield instagram_service_1.instagramService.getInstagramData();
+    console.log("🚀 ~ getInstagramData ~ instagramData:", instagramData);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_codes_1.StatusCodes.OK,
         message: "Instagram data fetched successfully",

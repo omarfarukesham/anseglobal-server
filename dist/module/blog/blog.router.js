@@ -4,11 +4,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const auth_1 = __importDefault(require("../../middlewares/auth"));
 const validateRequest_1 = __importDefault(require("../../middlewares/validateRequest"));
+const user_constants_1 = require("../user/user.constants");
 const blog_controller_1 = require("./blog.controller");
 const blog_validation_1 = require("./blog.validation");
-const auth_1 = __importDefault(require("../../middlewares/auth"));
-const user_constants_1 = require("../user/user.constants");
 const blogRouter = (0, express_1.Router)();
 /**
  * @swagger
@@ -36,7 +36,24 @@ const blogRouter = (0, express_1.Router)();
  *       401:
  *         description: Unauthorized
  */
-blogRouter.post('/', (0, auth_1.default)(user_constants_1.USER_ROLE.admin, user_constants_1.USER_ROLE.user), (0, validateRequest_1.default)(blog_validation_1.BlogValidation.blogValidationSchema), blog_controller_1.blogController.createBlog);
+blogRouter.post("/", (0, auth_1.default)(user_constants_1.USER_ROLE.admin, user_constants_1.USER_ROLE.user), (0, validateRequest_1.default)(blog_validation_1.BlogValidation.blogValidationSchema), blog_controller_1.blogController.createBlog);
+/**
+ * @swagger
+ * /api/blogs:
+ *   get:
+ *     summary: Get all blogs
+ *     tags: [Blog]
+ *     responses:
+ *       200:
+ *         description: List of blogs
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Blog'
+ */
+blogRouter.get("/", blog_controller_1.blogController.getBlogs);
 /**
  * @swagger
  * /api/blogs/{id}:
@@ -60,7 +77,33 @@ blogRouter.post('/', (0, auth_1.default)(user_constants_1.USER_ROLE.admin, user_
  *       404:
  *         description: Blog not found
  */
-blogRouter.get('/:id', (0, auth_1.default)(user_constants_1.USER_ROLE.admin, user_constants_1.USER_ROLE.user), blog_controller_1.blogController.getSingleBlog);
+blogRouter.get("/id/:id", 
+// auth(USER_ROLE.admin, USER_ROLE.user),
+blog_controller_1.blogController.getSingleBlog);
+/**
+ * @swagger
+ * /api/blogs/{id}:
+ *   get:
+ *     summary: Get a single blog by ID
+ *     tags: [Blog]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The blog ID
+ *     responses:
+ *       200:
+ *         description: Blog found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Blog'
+ *       404:
+ *         description: Blog not found
+ */
+blogRouter.get("/slug/:slug", blog_controller_1.blogController.getBlogBySlug);
 /**
  * @swagger
  * /api/blogs/{id}:
@@ -86,7 +129,7 @@ blogRouter.get('/:id', (0, auth_1.default)(user_constants_1.USER_ROLE.admin, use
  *       404:
  *         description: Blog not found
  */
-blogRouter.patch('/:id', (0, auth_1.default)(user_constants_1.USER_ROLE.admin, user_constants_1.USER_ROLE.user), blog_controller_1.blogController.updateBlog);
+blogRouter.patch("/id/:id", (0, auth_1.default)(user_constants_1.USER_ROLE.admin, user_constants_1.USER_ROLE.user), blog_controller_1.blogController.updateBlog);
 /**
  * @swagger
  * /api/blogs/{id}:
@@ -106,24 +149,7 @@ blogRouter.patch('/:id', (0, auth_1.default)(user_constants_1.USER_ROLE.admin, u
  *       404:
  *         description: Blog not found
  */
-blogRouter.delete('/:id', (0, auth_1.default)(user_constants_1.USER_ROLE.admin, user_constants_1.USER_ROLE.user), blog_controller_1.blogController.deleteBlog);
-/**
- * @swagger
- * /api/blogs:
- *   get:
- *     summary: Get all blogs
- *     tags: [Blog]
- *     responses:
- *       200:
- *         description: List of blogs
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Blog'
- */
-blogRouter.get('/', blog_controller_1.blogController.getBlogs);
+blogRouter.delete("/id/:id", (0, auth_1.default)(user_constants_1.USER_ROLE.admin, user_constants_1.USER_ROLE.user), blog_controller_1.blogController.deleteBlog);
 exports.default = blogRouter;
 // import { Router } from 'express'
 // import validateRequest from '../../middlewares/validateRequest'

@@ -19,14 +19,14 @@ const sendResponse_1 = __importDefault(require("../../utils/sendResponse"));
 const blog_service_1 = require("./blog.service");
 const createBlog = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (!req.user) {
-        throw new Error('User is not authenticated');
+        throw new Error("User is not authenticated");
     }
     const payload = Object.assign(Object.assign({}, req.body), { author: req.user.id });
     // console.log(payload)
     const result = yield blog_service_1.blogService.createBlog(payload);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_codes_1.StatusCodes.CREATED,
-        message: 'Blog created successfully',
+        message: "Blog created successfully",
         data: result,
     });
 }));
@@ -34,7 +34,7 @@ const getBlogs = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 
     const result = yield blog_service_1.blogService.getBlogs(req.query);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_codes_1.StatusCodes.OK,
-        message: 'Blog getting successfully',
+        message: "Blog getting successfully",
         data: result,
     });
 }));
@@ -44,30 +44,40 @@ const getSingleBlog = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
     const result = yield blog_service_1.blogService.getSingleBlog(blogId);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_codes_1.StatusCodes.OK,
-        message: 'Blog getting successfully',
+        message: "Blog getting successfully",
+        data: result,
+    });
+}));
+const getBlogBySlug = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const blogSlug = req.params.slug;
+    const result = yield blog_service_1.blogService.getBlogBySlug(blogSlug);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_codes_1.StatusCodes.OK,
+        message: "Blog getting successfully",
         data: result,
     });
 }));
 const updateBlog = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const blogId = req.params.id;
     const body = req.body;
-    console.log("update blog ......", body, blogId);
+    // console.log("update blog ......", body, blogId);
     const result = yield blog_service_1.blogService.updateBlog(blogId, body);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_codes_1.StatusCodes.OK,
-        message: 'Blog updated successfully',
+        message: "Blog updated successfully",
         data: result,
     });
 }));
 const deleteBlog = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
+    console.log("hit1");
     const blogId = req.params.id;
     const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;
     // console.log(req.user)
-    yield blog_service_1.blogService.deleteBlog(blogId, userId);
+    const result = yield blog_service_1.blogService.deleteBlog(blogId, userId);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_codes_1.StatusCodes.OK,
-        message: 'Blog deleted successfully',
+        message: "Blog deleted successfully",
         data: {},
     });
 }));
@@ -75,6 +85,7 @@ exports.blogController = {
     createBlog,
     getBlogs,
     getSingleBlog,
+    getBlogBySlug,
     updateBlog,
     deleteBlog,
 };

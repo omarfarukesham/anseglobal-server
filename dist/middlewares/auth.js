@@ -19,21 +19,21 @@ const auth = (...requiredRoles) => {
     return (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
         const token = req.headers.authorization;
         if (!token) {
-            throw new Error('You are not authorized!');
+            throw new Error("You are not authorized!");
         }
         const getToken = token.split(" ")[1];
         const decoded = jsonwebtoken_1.default.verify(getToken, "primarytestkey");
         const { role, email, id } = decoded;
         const user = yield user_model_1.default.findOne({ email });
         if (!user) {
-            throw new Error('This user is not found !');
+            throw new Error("This user is not found !");
         }
         const userStatus = user === null || user === void 0 ? void 0 : user.isBlocked;
         if (userStatus === true) {
-            throw new Error('This user is blocked ! !');
+            throw new Error("This user is blocked !!");
         }
         if (requiredRoles && !requiredRoles.includes(role)) {
-            throw new Error('You are not authorized');
+            throw new Error("You are not authorized");
         }
         req.user = decoded;
         // console.log(req.user)

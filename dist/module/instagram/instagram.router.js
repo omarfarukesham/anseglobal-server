@@ -25,7 +25,7 @@ const instagramRouter = (0, express_1.Router)();
  *       201:
  *         description: Instagram record created successfully
  */
-instagramRouter.post("/", instagram_controller_1.instagramController.createInstagramToken);
+instagramRouter.post("/token", instagram_controller_1.instagramController.createInstagramToken);
 /**
  * @swagger
  * /api/instagram:
@@ -42,7 +42,7 @@ instagramRouter.post("/", instagram_controller_1.instagramController.createInsta
  *               items:
  *                 $ref: '#/components/schemas/Instagram'
  */
-instagramRouter.get("/", instagram_controller_1.instagramController.getInstagramToken);
+instagramRouter.get("/token", instagram_controller_1.instagramController.getInstagramToken);
 /**
  * @swagger
  * /api/instagram/{id}:
@@ -62,7 +62,7 @@ instagramRouter.get("/", instagram_controller_1.instagramController.getInstagram
  *       404:
  *         description: Instagram record not found
  */
-instagramRouter.get("/:id", instagram_controller_1.instagramController.getInstagramById);
+// instagramRouter.get("/:id", instagramController.getInstagramById);
 /**
  * @swagger
  * /api/instagram/{id}:
@@ -82,7 +82,7 @@ instagramRouter.get("/:id", instagram_controller_1.instagramController.getInstag
  *       404:
  *         description: Instagram record not found
  */
-instagramRouter.put("/:token", instagram_controller_1.instagramController.updateInstagramToken);
+instagramRouter.put("/token/:token", instagram_controller_1.instagramController.updateInstagramToken);
 /**
  * @swagger
  * /api/instagram/data:
@@ -124,5 +124,5 @@ instagramRouter.get("/data", instagram_controller_1.instagramController.getInsta
  *       404:
  *         description: Instagram record not found
  */
-instagramRouter.delete("/:id", instagram_controller_1.instagramController.deleteInstagramToken);
+instagramRouter.delete("/token/:id", instagram_controller_1.instagramController.deleteInstagramToken);
 exports.default = instagramRouter;

@@ -18,13 +18,19 @@ const user_router_1 = __importDefault(require("./module/user/user.router"));
 const swagger_1 = __importDefault(require("./swagger"));
 const app = (0, express_1.default)();
 // CORS configuration
-const allowedOrigins = [
-    "https:localhost:3000",
-    "http://localhost:3000",
-    "https:localhost:5731",
-    "https://anseglobal.com",
-    "http://localhost:5000",
-];
+// const allowedOrigins = [
+//   "https:localhost:3000",
+//   "http://localhost:3001",
+//   "http://localhost:3000",
+//   "https:localhost:5731",
+//   "https://anseglobal.com",
+//   "http://admin.anseglobal.com",
+//   "https://admin.anseglobal.com",
+//   "https://backend.anseglobal.com",
+//   "http://backend.anseglobal.com",
+//   "http://localhost:5000",
+// ];
+const allowedOrigins = "*";
 app.use((0, cors_1.default)({
     origin: function (origin, callback) {
         if (!origin)
