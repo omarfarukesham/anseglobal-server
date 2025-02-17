@@ -24,6 +24,16 @@ const getBlogs = async (query: Record<string, unknown>) => {
   return result;
 };
 
+const getLatestBlogs = async (
+  options: { limit?: number; sort?: Record<string, unknown> } = {}
+) => {
+  const { limit = 3, sort = { createdAt: -1 } } = options;
+  const result = await Blog.find()
+    .sort(sort as any)
+    .limit(limit);
+  return result;
+};
+
 const getSingleBlog = async (id: string) => {
   const result = await Blog.findById(id).populate("author", "name email role");
   return result;
@@ -55,6 +65,7 @@ const deleteBlog = async (blogId: string, userId: string) => {
 export const blogService = {
   createBlog,
   getBlogs,
+  getLatestBlogs,
   getSingleBlog,
   getBlogBySlug,
   updateBlog,
