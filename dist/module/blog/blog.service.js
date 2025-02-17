@@ -23,12 +23,20 @@ const createBlog = (payload) => __awaiter(void 0, void 0, void 0, function* () {
 // search, filtering and pagination functions for blog posts
 const getBlogs = (query) => __awaiter(void 0, void 0, void 0, function* () {
     const searchableFields = ["title", "content"];
-    const blogs = new querybuilder_1.default(blog_model_1.default.find(), query).search(searchableFields).filter().sort().select();
+    const blogs = new querybuilder_1.default(blog_model_1.default.find(), query)
+        .search(searchableFields)
+        .filter()
+        .sort()
+        .select();
     const result = yield blogs.modelQuery.populate("author", "name email role");
     return result;
 });
 const getSingleBlog = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield blog_model_1.default.findById(id).populate("author", "name email role");
+    return result;
+});
+const getBlogBySlug = (slug) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield blog_model_1.default.findOne({ slug }).populate("author", "name email role");
     return result;
 });
 const updateBlog = (id, data) => __awaiter(void 0, void 0, void 0, function* () {
@@ -38,10 +46,9 @@ const updateBlog = (id, data) => __awaiter(void 0, void 0, void 0, function* () 
     return result;
 });
 const deleteBlog = (blogId, userId) => __awaiter(void 0, void 0, void 0, function* () {
-    //  console.log(blogId, userId)
-    const result = yield blog_model_1.default.findByIdAndDelete({ _id: blogId, another: userId });
-    if (result) {
-        throw new Error('Could not delete');
+    const result = yield blog_model_1.default.findByIdAndDelete(blogId);
+    if (!result) {
+        throw new Error("Could not delete the blog");
     }
     return result;
 });
@@ -49,6 +56,7 @@ exports.blogService = {
     createBlog,
     getBlogs,
     getSingleBlog,
+    getBlogBySlug,
     updateBlog,
     deleteBlog,
 };

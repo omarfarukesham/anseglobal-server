@@ -28,13 +28,19 @@ const getInstagramToken = () => __awaiter(void 0, void 0, void 0, function* () {
     return result;
 });
 const getInstagramData = () => __awaiter(void 0, void 0, void 0, function* () {
-    const instagramRecord = yield instagram_model_1.default.findOne(); // Get the existing Instagram record
-    if (!instagramRecord) {
-        throw new Error("No Instagram token found.");
+    var _a, _b;
+    try {
+        const instagramRecord = yield instagram_model_1.default.findOne();
+        if (!instagramRecord) {
+            throw new Error("No Instagram token found.");
+        }
+        const token = instagramRecord.token;
+        const response = yield axios_1.default.get(`https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,thumbnail_url,permalink,timestamp&access_token=${token}`);
+        return response.data;
     }
-    const token = instagramRecord.token;
-    const response = yield axios_1.default.get(`https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,thumbnail_url,permalink,timestamp&access_token=${token}`);
-    return response.data;
+    catch (error) {
+        throw new Error(JSON.stringify((_b = (_a = error.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.error));
+    }
 });
 const getSingleInstagram = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield instagram_model_1.default.findById(id);

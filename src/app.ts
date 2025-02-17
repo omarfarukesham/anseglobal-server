@@ -14,33 +14,10 @@ import swaggerSpec from "./swagger";
 
 const app = express();
 
-// CORS configuration
-// const allowedOrigins = [
-//   "https:localhost:3000",
-//   "http://localhost:3001",
-//   "http://localhost:3000",
-//   "https:localhost:5731",
-//   "https://anseglobal.com",
-//   "http://admin.anseglobal.com",
-//   "https://admin.anseglobal.com",
-//   "https://backend.anseglobal.com",
-//   "http://backend.anseglobal.com",
-//   "http://localhost:5000",
-// ];
-
-const allowedOrigins = "*";
-
+//// CORS configuration
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.indexOf(origin) === -1) {
-        const msg =
-          "The CORS policy for this site does not allow access from the specified Origin.";
-        return callback(new Error(msg), false);
-      }
-      return callback(null, true);
-    },
+    origin: "*",
     credentials: true,
   })
 );

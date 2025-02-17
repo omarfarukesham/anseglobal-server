@@ -49,17 +49,16 @@ const blogSchema = new mongoose_1.Schema({
     },
     author: {
         type: mongoose_1.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: "User",
         required: true,
     },
     image: {
         type: String,
-        required: true,
     },
     isPublished: {
         type: Boolean,
         default: false,
-    }
+    },
 }, {
     timestamps: true,
 });

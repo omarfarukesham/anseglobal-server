@@ -60,9 +60,6 @@ const seoSchema = new mongoose_1.Schema({
     hreflang: {
         type: String,
     },
-    lastModified: {
-        type: Date,
-    },
     canonicalUrl: {
         type: String,
         unique: true,
