@@ -84,7 +84,7 @@ blogRouter.get("/", blogController.getBlogs);
  */
 blogRouter.get(
   "/id/:id",
-  auth(USER_ROLE.admin, USER_ROLE.user),
+  // auth(USER_ROLE.admin, USER_ROLE.user),
   blogController.getSingleBlog
 );
 
