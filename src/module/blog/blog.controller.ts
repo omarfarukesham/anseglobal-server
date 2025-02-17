@@ -11,7 +11,7 @@ const createBlog = catchAsync(async (req, res) => {
     ...req.body,
     author: req.user.id,
   };
-  // console.log(payload)
+
   const result = await blogService.createBlog(payload);
 
   sendResponse(res, {
@@ -26,6 +26,18 @@ const getBlogs = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     message: "Blog getting successfully",
+    data: result,
+  });
+});
+
+const getLatestBlogs = catchAsync(async (req, res) => {
+  const result = await blogService.getLatestBlogs({
+    sort: { createdAt: -1 },
+    limit: 3,
+  });
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    message: "Latest blogs retrieved successfully",
     data: result,
   });
 });
@@ -85,6 +97,7 @@ const deleteBlog = catchAsync(async (req, res) => {
 export const blogController = {
   createBlog,
   getBlogs,
+  getLatestBlogs,
   getSingleBlog,
   getBlogBySlug,
   updateBlog,

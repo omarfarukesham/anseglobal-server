@@ -58,6 +58,7 @@ blogRouter.post(
  *                 $ref: '#/components/schemas/Blog'
  */
 blogRouter.get("/", blogController.getBlogs);
+blogRouter.get("/latest", blogController.getLatestBlogs);
 
 /**
  * @swagger
